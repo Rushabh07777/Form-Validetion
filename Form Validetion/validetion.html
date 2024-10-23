@@ -7,6 +7,12 @@
     <title>Document</title>
 </head>
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
     body {
         background-image: url("https://8f430952.rocketcdn.me/wp-content/uploads/2019/04/ntflxx.png");
         background-position: right;
@@ -62,9 +68,9 @@
     #box {
         width: 200px;
         margin-left: 500px;
-        margin-top: 100px;
+        margin-top: 10px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-        max-width: 450px;
+        max-width: 500px;
         height: auto;
         width: 719px;
         border-radius: 8px;
@@ -79,70 +85,99 @@
 
     .TT {
         margin-bottom: 50px;
-
     }
 
-   #error{
-    font-family:Arial, Helvetica, sans-serif ;
-    font-size: 1rem;
-    color: red;
-    display: inline-block;
-   }
-   #Sucess{
-    color: green;
-    font-family:Arial, Helvetica, sans-serif ;
-    font-size:0.9rem;
-    display: inline-block;
-   }
+    #error {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1rem;
+        color: red;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
+
+    #Sucess {
+        color: green;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.9rem;
+        display: inline-block;
+    }
 </style>
 
 <body>
     <div id="box">
         <form id="myform">
-        <div class="bb">
-            <h1>Sign in </h1>
-        </div>
-        <div class="ii">
-            <input type="email" placeholder="Enter Your Email" id="email">
-        </div>
-        <div class="ii">
-            <input type="password" placeholder="Enter a Password" id="password">
-        </div>
-        <div class="ii">
-            <input type="password" placeholder="Confirm Your Password" id="cpassword">
-        </div>
-        <p id="error"></p>
-        <p id="Sucess"></p>
-        <div class="TT">
-            <button type="submit">Sign In</button>
-        </div>
-       
-    </form>
+            <div class="bb">
+                <h1>Sign in </h1>
+            </div>
+            <div class="ii">
+                <input type="text" placeholder="Enter Your Name" id="name" required>
+            </div>
+            <div class="ii">
+                <input type="email" placeholder="Enter Your Email" id="email" required>
+            </div>
+            <div class="ii">
+                <input type="number" placeholder="Moblie Number" id="number" required>
+            </div>
+            <div class="ii">
+                <input type="password" placeholder="Enter a Password" id="password" required>
+            </div>
+            <div class="ii">
+                <input type="password" placeholder="Confirm Your Password" id="cpassword" required>
+            </div>
+            <p id="error"></p>
+            <p id="Sucess"></p>
+            <div class="TT">
+                <button type="submit">Sign In</button>
+            </div>
+
+        </form>
     </div>
     <script>
 
         let myform = document.getElementById("myform");
         let result = document.getElementById("error");
         let Sucess = document.getElementById("Sucess");
-        myform.addEventListener('submit',(e)=>{
+        myform.addEventListener('submit', (e) => {
             e.preventDefault();
             let form = {
-                email : document.getElementById("email").value,
-                password :document.getElementById("password").value,
-                cpassword : document.getElementById("cpassword").value
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                number: document.getElementById("number").value,
+                password: document.getElementById("password").value,
+                cpassword: document.getElementById("cpassword").value
             }
             validate(form);
         })
-            function validate(user){
-     
-                if(user.password !== user.cpassword){
-                    error.textContent = "Your Password Does't Match!"
-                }else{
-                    Sucess.textContent = 'Thank you! Your message has been sent successfully.'
-                }
-        
-        
+        function validate(user) {
+            if (!/^[A-Za-z]{2,}$/.test(user.name)) {
+                error.textContent = "Enter a Valid Name"
             }
+
+            else if (!/^\S+@\S+\.\S+$/.test(user.email)) {
+                error.textContent = "Email Not Found"
+            }
+            else if (!/^\d{10}$/.test(user.number)) {
+                error.textContent = "Mobile Not Found"
+            }
+            else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/.test(user.password)) {
+                error.textContent = "Please Enter a Strong Password"
+            }
+
+            else if (user.password !== user.cpassword) {
+                error.textContent = "Your Password Does't Match!"
+            }
+            else if (user.name || user.email || user.number || user.password || user.cpassword) {
+                console.log(user.name);
+                console.log(user.email);
+                console.log(user.number);
+                console.log(user.password);
+                console.log(user.cpassword);
+                Sucess.textContent = 'Thank you! Your Detalis has been sent successfully!'
+            } else {
+                error.textContent("Phele Pura Form Bhar!");
+            }
+        }
     </script>
 </body>
 
